@@ -2,7 +2,14 @@
 
 class AdifHelper {
 
-    public function getAdifLine($qso) {
+    /**
+     * Generates an ADIF line for a QSO record.
+     *
+     * @param object $qso The QSO record.
+     * @param bool $satellite_remap Flag indicating whether to remap satellite names.
+     * @return string The ADIF line.
+     */
+    public function getAdifLine($qso, $satellite_remap = false) {
         $normalFields = array(
             'ADDRESS',
             'AGE',
@@ -80,7 +87,6 @@ class AdifHelper {
             'RST_SENT',
             'RX_PWR',
             'SAT_MODE',
-            'SAT_NAME',
             'SFI',
             'SILENT_KEY',
             'SKCC',
@@ -183,24 +189,58 @@ class AdifHelper {
             $line .= $this->getAdifFieldLine("MY_GRIDSQUARE", $qso->station_gridsquare);
         }
 
+        if($qso->COL_SAT_NAME) {
+            if($satellite_remap === true) {
+                $satname = $this->lotw_satellite_map($qso->COL_SAT_NAME);
+                if($satname) {
+                    $line .= $this->getAdifFieldLine("SAT_NAME", $satname);
+                } else {
+                    $line .= $this->getAdifFieldLine("SAT_NAME", $qso->COL_SAT_NAME);
+                }
+            } else {
+                $line .= $this->getAdifFieldLine("SAT_NAME", $qso->COL_SAT_NAME);
+            }
+        }
+
         $line .= $this->getAdifFieldLine("MY_IOTA", $qso->station_iota);
 
         $line .= $this->getAdifFieldLine("MY_SOTA_REF", $qso->station_sota);
 
-
         $line .= $this->getAdifFieldLine("MY_POTA_REF", $qso->station_pota);
 
         $line .= $this->getAdifFieldLine("MY_CQ_ZONE", $qso->station_cq);
-
+        $line .= $this->getAdifFieldLine("APP_CLOUDLOG_MY_WAB", $qso->station_wab);
         $line .= $this->getAdifFieldLine("MY_ITU_ZONE", $qso->station_itu);
 
-		if($qso->state) {
+	if($qso->state) {
+    	    $line .= $this->getAdifFieldLine("MY_STATE", $qso->state);
+	}
+
+	if ($qso->station_cnty) {
+		switch ($qso->station_dxcc) {
+		    case '291':
+		    case '6':
+		    case '110':
 			$county = trim($qso->state) . "," . trim($qso->station_cnty);
-		} else {
-			$county = trim($qso->station_cnty);
+		        break;
+		    case '54':
+		    case '15':
+		    case '61':
+		    case '126':
+		    case '151':
+	    	        $county = trim($qso->station_cnty);
+		        break;
+		    default:
+	    		$county = trim($qso->station_cnty);
 		}
+	} else {
+	    $county = '';
+	}
+
 
         $line .= $this->getAdifFieldLine("MY_CNTY", $county);
+
+
 
 		$line .= $this->getAdifFieldLine("WWFF_REF", $qso->{'COL_WWFF_REF'});
 		$line .= $this->getAdifFieldLine("MY_WWFF_REF", $qso->station_wwff);
@@ -241,7 +281,6 @@ class AdifHelper {
             MY_NAME
             MY_POSTAL_CODE
             MY_RIG
-            MY_STATE
             MY_STREET
             MY_USACA_COUNTIES
         */
@@ -258,4 +297,36 @@ class AdifHelper {
             return "";
         }
     }
+
+    	/*
+	|	Function: lotw_satellite_map
+	|	Requires: OSCAR Satellite name $satname
+	|
+	|	Outputs if LoTW uses a different satellite name
+	|
+	*/
+	function lotw_satellite_map($satname) {
+		$arr = array(
+			"ARISS"		=>	"ISS",
+			"UKUBE1"	=>	"UKUBE-1",
+			"KEDR"		=>	"ARISSAT-1",
+			"TO-108"	=>	"CAS-6",
+			"TAURUS"	=>	"TAURUS-1",
+			"AISAT1"	=>	"AISAT-1",
+			'UVSQ'		=>	"UVSQ-SAT",
+			'CAS-3H'	=>	"LILACSAT-2",
+			'IO-117'	=>	"GREENCUBE",
+			"TEVEL1"	=>	"TEVEL-1",
+			"TEVEL2"	=>	"TEVEL-2",
+			"TEVEL3"	=>	"TEVEL-3",
+			"TEVEL4"	=>	"TEVEL-4",
+			"TEVEL5"	=>	"TEVEL-5",
+			"TEVEL6"	=>	"TEVEL-6",
+			"TEVEL7"	=>	"TEVEL-7",
+			"TEVEL8"	=>	"TEVEL-8",
+			"INSPR7"	=> "INSPIRE-SAT 7",
+		);
+
+		return array_search(strtoupper($satname),$arr,true);
+	}
 }

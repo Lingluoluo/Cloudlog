@@ -114,7 +114,7 @@ $lang['account_gridmap_default_band'] = 'Default Band';
 $lang['account_qsl_settings'] = 'Default QSL-Methods';
 
 $lang['account_winkeyer'] = 'Winkeyer';
-$lang['account_winkeyer_hint'] = "Winkeyer support in Cloudlog is very experimental read the wiki first at <a href='https://github.com/magicbug/Cloudlog/wiki/Winkey' target='_blank'>https://github.com/magicbug/Cloudlog/wiki/Winkey</a> before enabling.";
+$lang['account_winkeyer_hint'] = "Winkeyer support in Cloudlog is very experimental.<br><br>Read the wiki first at <a href='https://github.com/magicbug/Cloudlog/wiki/Winkey' target='_blank'>https://github.com/magicbug/Cloudlog/wiki/Winkey</a> before enabling.";
 $lang['account_winkeyer_enabled'] = "Winkeyer Features Enabled";
 
 $lang['account_map_params'] = "Map Settings";
@@ -127,3 +127,11 @@ $lang['account_qso_logging_options'] = "QSO Logging Options";
 $lang['account_third_party_services'] = "Third Party Services";
 $lang['account_default_values'] = "Default Values";
 $lang['account_miscellaneous'] = "Miscellaneous";
+
+$lang['account_hamsat'] = "Hams.at";
+$lang['account_hamsat_private_feed_key'] = "Private Feed Key";
+$lang['account_hamsat_hint'] = "See your profile at <a href='https://hams.at/users/settings' target='_blank'>https://hams.at/users/settings</a>.";
+$lang['account_hamsat_workable_only'] = "Show Workable Passes Only";
+$lang['account_hamsat_workable_only_hint'] = "If enabled shows only workable passes based on the gridsquare set in your hams.at account. Requires private feed key to be set.";
+
+$lang['account_remember_me'] = 'Remember me';

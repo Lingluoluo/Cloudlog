@@ -17,6 +17,7 @@ $lang['menu_post_contest_logging'] = 'Uložit závodní log';
 $lang['menu_bandmap'] = 'Bandmap';
 $lang['menu_view_qsl'] = 'Zobrazit QSL';
 $lang['menu_view_eqsl'] = 'Zobrazit eQSL';
+$lang['menu_view_sstv'] = 'View SSTV Images';
 
 $lang['menu_notes'] = 'Poznámky';
 
@@ -94,3 +95,4 @@ $lang['menu_logout'] = 'Odhlásit se';
 $lang['menu_ffma'] = "Fred Fish Memorial Award";
 $lang['menu_ja_gridmaster'] = 'JA Gridmaster';
 $lang['menu_maintenance']='Maintenance';
+$lang['menu_uk_gridmaster'] = 'UK Gridmaster';

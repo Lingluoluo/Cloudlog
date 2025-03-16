@@ -1,0 +1,65 @@
+on: [pull_request, workflow_dispatch]
+jobs:
+  cypress-e2e-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Cache Node modules
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: npm-${{ hashFiles('package-lock.json') }}
+          restore-keys: |
+            npm-
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Cache Cypress
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/Cypress
+          key: cypress-${{ hashFiles('package-lock.json') }}
+          restore-keys: |
+            cypress-
+
+      - name: Install Cypress
+        run: npm install cypress
+
+      - name: Cache .env
+        uses: actions/cache@v3
+        with:
+          path: .env
+          key: .env-${{ hashFiles('.env.sample') }}
+          restore-keys: |
+            .env-
+
+      - name: Setup .env
+        run: |
+          if [ ! -f .env ]; then
+            cp .env.sample .env
+          fi
+
+      - name: Install Docker Compose
+        run: |
+          sudo curl -L "https://github.com/docker/compose/releases/download/$(curl -s https://api.github.com/repos/docker/compose/releases/latest | jq -r .tag_name)/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+          sudo chmod +x /usr/local/bin/docker-compose
+
+      - name: Build Docker services
+        run: docker-compose up -d
+
+      - name: Wait for services to start
+        run: |
+          for i in `seq 1 30`; do
+            curl -s http://localhost:80 > /dev/null && break
+            echo "Waiting for services to start..."
+            sleep 5
+          done
+
+      - name: Populate dxcc_entities table
+        run: curl "http://localhost/index.php/update/dxcc"
+
+      - name: Run Cypress tests
+        run: npx cypress run

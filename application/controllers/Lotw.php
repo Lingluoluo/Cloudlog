@@ -297,23 +297,13 @@ class Lotw extends CI_Controller {
 				//Tell cURL to return the output as a string.
 				curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
-				//If the function curl_file_create exists
-				if(function_exists('curl_file_create')){
-					//Use the recommended way, creating a CURLFile object.
-					$filePath = curl_file_create($filePath);
-				} else{
-					//Otherwise, do it the old way.
-					//Get the canonicalized pathname of our file and prepend
-					//the @ character.
-					$filePath = '@' . realpath($filePath);
-					//Turn off SAFE UPLOAD so that it accepts files
-					//starting with an @
-					curl_setopt($ch, CURLOPT_SAFE_UPLOAD, false);
-				}
+				//Use the recommended way, creating a CURLFile object.
+				$uploadfile = curl_file_create($filePath);
+				$uploadfile->setPostFilename(basename($filePath));
 
 				//Setup our POST fields
 				$postFields = array(
-					$uploadFieldName => $filePath
+					$uploadFieldName => $uploadfile
 				);
 
 				curl_setopt($ch, CURLOPT_POSTFIELDS, $postFields);
@@ -325,6 +315,9 @@ class Lotw extends CI_Controller {
 				//with the error message.
 				if(curl_errno($ch)){
 					throw new Exception(curl_error($ch));
+
+					// Upload of TQ8 Failed for unknown reason
+					echo $station_profile->station_callsign." (".$station_profile->station_profile_name.") Upload Failed"."<br>";
 				}
 
 				$pos = strpos($result, "<!-- .UPL.  accepted -->");
@@ -967,7 +960,7 @@ class Lotw extends CI_Controller {
 		    openssl_free_key($pkeyid);
 		  }
 		  $signature_b64 = base64_encode($signature);
-		  return $signature_b64;
+		  return $signature_b64."\n";
 		}
 
 
@@ -1000,6 +993,8 @@ class Lotw extends CI_Controller {
 			"TEVEL7"	=>	"TEVEL-7",
 			"TEVEL8"	=>	"TEVEL-8",
 			"INSPR7"	=> "INSPIRE-SAT 7",
+			"SONATE"	=> "SONATE-2",
+			'AO-123'	=> "ASRTU-1",
 		);
 
 		return array_search(strtoupper($satname),$arr,true);
@@ -1013,6 +1008,9 @@ class Lotw extends CI_Controller {
 		switch ($ca_prov):
 			case "QC":
 				return "PQ";
+				break;
+			case "NL":
+				return "NF";
 				break;
 			default:
 				return $ca_prov;

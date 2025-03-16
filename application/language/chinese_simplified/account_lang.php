@@ -11,6 +11,7 @@ $lang['account_column5_text'] = '第5列（仅日志页面展示）';
 
 $lang['account_create_user_account'] = '创建账户';
 $lang['account_edit_account'] = '编辑账户';
+$lang['account_remember_me'] = 'Remember me';
 
 $lang['account_account_information'] = '账户信息';
 $lang['account_user'] = "用户";
@@ -127,3 +128,8 @@ $lang['account_qso_logging_options'] = "QSO录入选项";
 $lang['account_third_party_services'] = "第三方服务";
 $lang['account_default_values'] = "默认值";
 $lang['account_miscellaneous'] = "其他";
+
+$lang['account_hamsat'] = "Hams.at";
+$lang['account_hamsat_private_feed_key'] = "Private Feed Key";
+$lang['account_hamsat_hint'] = "See your profile at <a href='https://hams.at/users/settings' target='_blank'>https://hams.at/users/settings</a>.";
+$lang['account_hamsat_workable_only'] = "Show Workable Passes Only";

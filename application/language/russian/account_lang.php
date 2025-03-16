@@ -11,6 +11,7 @@ $lang['account_column5_text'] = 'Выберите столбец 5 (только
 
 $lang['account_create_user_account'] = ' Создать аккаунт пользователя';
 $lang['account_edit_account'] = 'Редактировать аккаунт';
+$lang['account_remember_me'] = 'Remember me';
 
 $lang['account_account_information'] = 'Информация об аккаунте';
 $lang['account_user'] = "User";
@@ -77,10 +78,10 @@ $lang['account_logbook_of_the_world_lotw_username'] = 'Логин';
 $lang['account_logbook_of_the_world_lotw_password'] = 'Пароль';
 $lang['account_leave_blank_to_keep_existing_password'] = 'Оставьте пустым для сохранения текущего пароля';
 
-$lang['account_clublog'] = 'Club Log';
+$lang['account_clublog'] = 'Clublog';
 $lang['account_clublog_email_callsign'] = 'Емэйл/позывной';
 $lang['account_clublog_password'] = 'Пароль';
-$lang['account_the_email_or_callsign_you_use_to_login_to_club_log'] = 'Емэйл или позывной, которые вы используете для логина в Club Log';
+$lang['account_the_email_or_callsign_you_use_to_login_to_club_log'] = 'Емэйл или позывной, которые вы используете для логина в Clublog';
 
 $lang['account_eqsl'] = 'eQSL';
 $lang['account_eqslcc_username'] = 'Логин';
@@ -117,13 +118,19 @@ $lang['account_winkeyer'] = 'Winkeyer';
 $lang['account_winkeyer_hint'] = "Поддержка Winkeyer в Cloudlog в стадии эксперимента, прочитайте сначала вики (<a href='https://github.com/magicbug/Cloudlog/wiki/Winkey' target='_blank'>https://github.com/magicbug/Cloudlog/wiki/Winkey</a>) перед включением.";
 $lang['account_winkeyer_enabled'] = "Функционал Winkeyer включен";
 
-$lang['account_map_params'] = "Map Settings";
-$lang['account_map_qso_by_default'] = "QSO (by default)";
-$lang['account_map_qso_confirm'] = "QSO (confirmed)";
-$lang['account_map_qso_confirm_same_qso'] = "(If 'No', displayed as ".$lang['account_map_qso_by_default'].")";
+$lang['account_map_params'] = "Настройки карты";
+$lang['account_map_qso_by_default'] = "QSO (по умолчанию)";
+$lang['account_map_qso_confirm'] = "QSO (подтверждённые)";
+$lang['account_map_qso_confirm_same_qso'] = "(Если 'Нет', отображаются как ".$lang['account_map_qso_by_default'].")";
 
-$lang['account_general_information'] = "General Information";
-$lang['account_qso_logging_options'] = "QSO Logging Options";
-$lang['account_third_party_services'] = "Third Party Services";
-$lang['account_default_values'] = "Default Values";
-$lang['account_miscellaneous'] = "Miscellaneous";
+$lang['account_general_information'] = "Основные данные";
+$lang['account_qso_logging_options'] = "Настройки записи QSO";
+$lang['account_third_party_services'] = "Сторонние сервисы";
+$lang['account_default_values'] = "Значения по умолчанию";
+$lang['account_miscellaneous'] = "Разное";
+
+$lang['account_hamsat'] = "Hams.at";
+$lang['account_hamsat_private_feed_key'] = "Частный ключ RSS потока";
+$lang['account_hamsat_hint'] = "Ключ можно найти в вашем профиле по ссылке <a href='https://hams.at/users/settings' target='_blank'>https://hams.at/users/settings</a>.";
+$lang['account_hamsat_workable_only'] = "Показывать только те витки, в которых возможно проведение QSO";
+$lang['account_hamsat_workable_only_hint'] = "Если включено, то будут показаны только те витки, в которых возможно проведение QSO, основываясь на квадрате, указанном в вашем аккаунте hams.at. Требует указания частного ключа RSS потока.";

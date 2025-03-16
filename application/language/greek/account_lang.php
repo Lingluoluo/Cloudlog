@@ -11,6 +11,7 @@ $lang['account_column5_text'] = 'Επιλογή στήλης  5 (Μόνο για
 
 $lang['account_create_user_account'] = "Create User Account";
 $lang['account_edit_account'] = 'Edit Account';
+$lang['account_remember_me'] = 'Remember me';
 
 $lang['account_account_information'] = "Account";
 $lang['account_user'] = "User";
@@ -127,3 +128,8 @@ $lang['account_qso_logging_options'] = "QSO Logging Options";
 $lang['account_third_party_services'] = "Third Party Services";
 $lang['account_default_values'] = "Default Values";
 $lang['account_miscellaneous'] = "Miscellaneous";
+
+$lang['account_hamsat'] = "Hams.at";
+$lang['account_hamsat_private_feed_key'] = "Private Feed Key";
+$lang['account_hamsat_hint'] = "See your profile at <a href='https://hams.at/users/settings' target='_blank'>https://hams.at/users/settings</a>.";
+$lang['account_hamsat_workable_only'] = "Show Workable Passes Only";

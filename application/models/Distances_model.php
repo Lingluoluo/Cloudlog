@@ -11,7 +11,7 @@ class Distances_model extends CI_Model
 
 		if (!$logbooks_locations_array) {
 			header('Content-Type: application/json');
-			echo json_encode(array('Error' => 'No QSOs found to plot.'));
+			echo json_encode(array('Error' => lang('statistics_distances_no_qsos_to_plot')));
 			return;
 		}
 
@@ -33,8 +33,28 @@ class Distances_model extends CI_Model
 						$this->db->where('col_sat_name', $postdata['sat']);
 					}
 				}
-				else {
+				elseif ($postdata['band'] != 'all') {
 					$this->db->where('col_band', $postdata['band']);
+				}
+
+				if ($postdata['mode'] != 'all') {
+					$this->db->group_start()->where('col_mode', $postdata['mode'])->or_where('col_submode', $postdata['mode'])->group_end();
+				}
+
+				if ($postdata['pwr'] != 'all') {
+					if ($postdata['pwr']) {
+						$this->db->where('col_tx_pwr', $postdata['pwr']);
+					} else {
+						$this->db->where('col_tx_pwr is NULL');
+					}
+				}
+
+				if ($postdata['propag'] != 'all') {
+					if ($postdata['propag']) {
+						$this->db->where('col_prop_mode', $postdata['propag']);
+					} else {
+						$this->db->where("col_prop_mode = ''");
+					}
 				}
 
 				$this->db->where('station_id', $station_id);
@@ -57,7 +77,7 @@ class Distances_model extends CI_Model
 		}
 		else {
 			header('Content-Type: application/json');
-			echo json_encode(array('Error' => 'No QSOs found to plot.'));
+			echo json_encode(array('Error' => lang('statistics_distances_no_qsos_to_plot')));
 		}
 
 	}
@@ -83,6 +103,7 @@ class Distances_model extends CI_Model
 				if(isset($result['qsodata'][$i]['callcount'])) {
 					if ($result['qsodata'][$i]['callcount'] < 5 && $add['qsodata'][$i]['callcount'] > 0) {
 						$calls = explode(',', $add['qsodata'][$i]['calls']);
+						$calls = array_unique($calls);
 						foreach ($calls as $c) {
 							if ($result['qsodata'][$i]['callcount'] < 5) {
 								if ($result['qsodata'][$i]['callcount'] > 0) {
@@ -143,7 +164,7 @@ class Distances_model extends CI_Model
 			$dist = '20000';
 		}
 
-		if (!$this->valid_locator($stationgrid)) {
+		if (!$this->valid_locator(substr($stationgrid, 0, 6))) {
 			header('Content-Type: application/json');
 			echo json_encode(array('Error' => 'Error. There is a problem with the gridsquare set in your profile!'));
 			exit;
@@ -163,32 +184,40 @@ class Distances_model extends CI_Model
 				'Grid' => '',
 				'Distance' => '',
 				'Qsos' => '',
-				'Grids' => ''
+				'Grids' => '',
+				'Avg_distance' => ''
 			);
+
+			$avg_distance = 0;
 
 			foreach ($qsoArray as $qso) {
 				$qrb['Qsos']++;                                                        // Counts up number of qsos
 				$bearingdistance = $this->qra->distance($stationgrid, $qso['grid'], $measurement_base);
+				$avg_distance += ($bearingdistance - $avg_distance) / $qrb['Qsos'];    // Calculates running average of distance
 				if ($bearingdistance != $qso['COL_DISTANCE']) {
 					$data = array('COL_DISTANCE' => $bearingdistance);
 	  				$this->db->where('COL_PRIMARY_KEY', $qso['COL_PRIMARY_KEY']);
 	  				$this->db->update($this->config->item('table_name'), $data);
 				}
-				$arrayplacement = (int)($bearingdistance / 50);                                // Resolution is 50, calculates where to put result in array
+				$arrayplacement = (int)($bearingdistance / 50);                         // Resolution is 50, calculates where to put result in array
 				if ($bearingdistance > $qrb['Distance']) {                              // Saves the longest QSO
 					$qrb['Distance'] = $bearingdistance;
 					$qrb['Callsign'] = $qso['callsign'];
 					$qrb['Grid'] = $qso['grid'];
 				}
-				$dataarray[$arrayplacement]['count']++;                                               // Used for counting total qsos plotted
+				$dataarray[$arrayplacement]['count']++;                                 // Used for counting total qsos plotted
 				if ($dataarray[$arrayplacement]['callcount'] < 5) {                     // Used for tooltip in graph, set limit to 5 calls shown
-					if ($dataarray[$arrayplacement]['callcount'] > 0) {
-						$dataarray[$arrayplacement]['calls'] .= ', ';
+					if (strpos($dataarray[$arrayplacement]['calls'], $qso['callsign']) === false) {   // Avoids duplicated callsigns
+						if ($dataarray[$arrayplacement]['callcount'] > 0) {
+							$dataarray[$arrayplacement]['calls'] .= ', ';
+						}
+						$dataarray[$arrayplacement]['calls'] .= $qso['callsign'];
+						$dataarray[$arrayplacement]['callcount']++;
 					}
-					$dataarray[$arrayplacement]['calls'] .= $qso['callsign'];
-					$dataarray[$arrayplacement]['callcount']++;
 				}
 			}
+
+			$qrb['Avg_distance'] = round($avg_distance, 1);
 
 			$data['ok'] = 'OK';
 			$data['qrb'] = $qrb;
@@ -214,10 +243,10 @@ class Distances_model extends CI_Model
 		}
 	}
 
-    	/*
+    /*
 	 * Used to fetch QSOs from the logbook in the awards
 	 */
-	public function qso_details($distance, $band, $sat){
+	public function qso_details($distance, $band, $sat, $mode, $power, $propag){
 		$distarray = $this->getdistparams($distance);
 		$CI =& get_instance();
 		$CI->load->model('logbooks_model');
@@ -232,8 +261,8 @@ class Distances_model extends CI_Model
 
 		$this->db->where_in($this->config->item('table_name').'.station_id', $logbooks_locations_array);
 
-		if ($band != 'All') {
-			if($band != "sat") {
+		if ($band != 'all') {
+			if ($band != "sat") {
 				$this->db->where('COL_PROP_MODE !=', 'SAT');
 				$this->db->where('COL_BAND', $band);
 			} else {
@@ -243,8 +272,28 @@ class Distances_model extends CI_Model
 				}
 			}
 		}
-		$this->db->order_by("COL_TIME_ON", "desc");
 
+		if ($mode != 'all') {
+			$this->db->group_start()->where('COL_MODE', $mode)->or_where('COL_SUBMODE', $mode)->group_end();
+		}
+
+		if ($power != 'all') {
+			if ($power) {
+				$this->db->where('COL_TX_PWR', $power);
+			} else {
+				$this->db->where('COL_TX_PWR is NULL');
+			}
+		}
+
+		if ($propag != 'all') {
+			if ($propag) {
+				$this->db->where('COL_PROP_MODE', $propag);
+			} else {
+				$this->db->where('COL_PROP_MODE is NULL');
+			}
+		}
+
+		$this->db->order_by("COL_TIME_ON", "desc");
 		return $this->db->get($this->config->item('table_name'));
 	}
 

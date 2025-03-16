@@ -17,6 +17,7 @@ function echo_table_header_col($ctx, $name) {
 		case 'Operator': echo '<th>'.$ctx->lang->line('gen_hamradio_operator').'</th>'; break;
 		case 'Location': echo '<th>'.$ctx->lang->line('cloudlog_station_profile').'</th>'; break;
 		case 'Name': echo '<th>'.$ctx->lang->line('general_word_name').'</th>'; break;
+		case 'Flag': echo '<th>&nbsp;</th>'; break;
 	}
 }
 
@@ -32,13 +33,18 @@ function echo_table_col($row, $name) {
 		case 'WWFF':    echo '<td>' . ($row->COL_WWFF_REF) . '</td>'; break;
 		case 'POTA':    echo '<td>' . ($row->COL_POTA_REF) . '</td>'; break;
 		case 'Grid':    echo '<td>'; echoQrbCalcLink($row->station_gridsquare, $row->COL_VUCC_GRIDS, $row->COL_GRIDSQUARE); echo '</td>'; break;
-		case 'Distance':echo '<td>' . ($row->COL_DISTANCE ? $row->COL_DISTANCE . '&nbsp;km' : '') . '</td>'; break;
+		case 'Distance':echo '<td><span data-bs-toggle="tooltip" title="'.$row->COL_GRIDSQUARE.'">' . ($row->COL_DISTANCE ? $row->COL_DISTANCE . '&nbsp;km' : '') . '</span></td>'; break;
 		case 'Band':    echo '<td>'; if($row->COL_SAT_NAME != null) { echo '<a href="https://db.satnogs.org/search/?q='.$row->COL_SAT_NAME.'" target="_blank"><span data-bs-toggle="tooltip" title="'.$row->COL_BAND.'">'.$row->COL_SAT_NAME.'</span></a></td>'; } else { if ($row->COL_FREQ != null) { echo ' <span data-bs-toggle="tooltip" title="'.$ci->frequency->hz_to_mhz($row->COL_FREQ).'">'. strtolower($row->COL_BAND).'</span>'; } else { echo strtolower($row->COL_BAND); } } echo '</td>'; break;
 		case 'Frequency':    echo '<td>'; if($row->COL_SAT_NAME != null) { echo '<a href="https://db.satnogs.org/search/?q='.$row->COL_SAT_NAME.'" target="_blank">'; if ($row->COL_FREQ != null) { echo ' <span data-bs-toggle="tooltip" title="'.$ci->frequency->hz_to_mhz($row->COL_FREQ).'">'.$row->COL_SAT_NAME.'</span>'; } else { echo $row->COL_SAT_NAME; } echo '</a></td>'; } else { if ($row->COL_FREQ != null) { echo ' <span data-bs-toggle="tooltip" title="'.$row->COL_BAND.'">'.$ci->frequency->hz_to_mhz($row->COL_FREQ).'</span>'; } else { echo strtolower($row->COL_BAND); } } echo '</td>'; break;
 		case 'State':   echo '<td>' . ($row->COL_STATE) . '</td>'; break;
 		case 'Operator':echo '<td>' . ($row->COL_OPERATOR) . '</td>'; break;
 		case 'Location':echo '<td>' . ($row->station_profile_name) . '</td>'; break;
 		case 'Name':echo '<td>' . ($row->COL_NAME) . '</td>'; break;
+		case 'Flag':
+			$ci->load->library('DxccFlag');	
+			$flag = strtolower($ci->dxccflag->getISO($row->COL_DXCC));
+			echo '<td><span data-bs-toggle="tooltip" title="' . ucwords(strtolower(($row->name==null?"- NONE -":$row->name))) . '"><span class="fi fi-' . $flag .'"></span></span></td>'; 
+			break;
 	}
 }
 
@@ -51,7 +57,10 @@ function echoQrbCalcLink($mygrid, $grid, $vucc) {
 }
 ?>
 
-<?php if ($results) { ?>
+<?php
+$this->load->library('DxccFlag');
+if ($results) { 
+?>
 
 <div class="table-responsive">
     <table style="width:100%" class="table contacttable table-striped table-hover">
@@ -90,7 +99,7 @@ function echoQrbCalcLink($mygrid, $grid, $vucc) {
         <tbody>
 
         <?php  $i = 0;  
-            foreach ($results->result() as $row) {
+            foreach ($results->result() as $row) {				
                 // Get Date format
                 if($this->session->userdata('user_date_format')) {
                     // If Logged in and session exists
@@ -102,7 +111,7 @@ function echoQrbCalcLink($mygrid, $grid, $vucc) {
                 echo '<tr class="tr'.($i & 1).'" id="qso_'. $row->COL_PRIMARY_KEY .'">'; ?>
             <td><?php $timestamp = strtotime($row->COL_TIME_ON); echo date($custom_date_format, $timestamp); ?></td>
             <?php if(($this->config->item('use_auth') && ($this->session->userdata('user_type') >= 2)) || $this->config->item('use_auth') === FALSE || ($this->config->item('show_time'))) { ?>
-                <td><?php $timestamp = strtotime($row->COL_TIME_ON); echo date('H:i', $timestamp); ?></td>
+            <td><?php $timestamp = strtotime($row->COL_TIME_ON); echo date('H:i', $timestamp); ?></td>
             <?php } ?>
             <td>
                 <a id="edit_qso" href="javascript:displayQso(<?php echo $row->COL_PRIMARY_KEY; ?>)"><?php echo str_replace("0","&Oslash;",strtoupper($row->COL_CALL)); ?></a>
@@ -247,11 +256,11 @@ function echoQrbCalcLink($mygrid, $grid, $vucc) {
             <?php if(($this->config->item('use_auth')) && ($this->session->userdata('user_type') >= 2)) { ?>
                 <td>
                     <div class="dropdown">
-                        <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-haspopup="false" aria-expanded="false">
                             <i class="fas fa-cog"></i>
                         </a>
 
-                        <div class="dropdown-menu menuOnResultTab" data-bs-toggle="popover" data-bs-placement="auto" data-qsoid="qso_<?php echo $row->COL_PRIMARY_KEY; ?>">
+                        <div class="dropdown-menu" data-bs-toggle="popover" data-bs-placement="auto" data-qsoid="qso_<?php echo $row->COL_PRIMARY_KEY; ?>">
                             <a class="dropdown-item" id="edit_qso" href="javascript:qso_edit(<?php echo $row->COL_PRIMARY_KEY; ?>)"><i class="fas fa-edit"></i> <?php echo lang('general_edit_qso'); ?></a>
 
                             <?php if($row->COL_QSL_SENT !='Y') { ?>

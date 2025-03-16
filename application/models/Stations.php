@@ -30,6 +30,8 @@ class Stations extends CI_Model {
 		$this->db->select('station_profile.*, dxcc_entities.name as station_country, dxcc_entities.end as dxcc_end');
 		$this->db->where('user_id', $userid);
 		$this->db->join('dxcc_entities','station_profile.station_dxcc = dxcc_entities.adif','left outer');
+		$this->db->order_by('station_profile.station_callsign');
+		$this->db->order_by('station_profile.station_profile_name');
 		return $this->db->get('station_profile');
 	}
 
@@ -91,6 +93,7 @@ class Stations extends CI_Model {
 			'station_sota' =>  xss_clean(strtoupper($this->input->post('sota', true))),
 			'station_wwff' =>  xss_clean(strtoupper($this->input->post('wwff', true))),
 			'station_pota' =>  xss_clean(strtoupper($this->input->post('pota', true))),
+			'station_wab' =>  xss_clean(strtoupper($this->input->post('wab', true))),
 			'station_sig' =>  xss_clean(strtoupper($this->input->post('sig', true))),
 			'station_sig_info' =>  xss_clean(strtoupper($this->input->post('sig_info', true))),
 			'station_callsign' =>  xss_clean($this->input->post('station_callsign', true)),
@@ -141,6 +144,7 @@ class Stations extends CI_Model {
 			'station_sota' => xss_clean($this->input->post('sota', true)),
 			'station_wwff' => xss_clean($this->input->post('wwff', true)),
 			'station_pota' => xss_clean($this->input->post('pota', true)),
+			'station_wab' => xss_clean($this->input->post('wab', true)),
 			'station_sig' => xss_clean($this->input->post('sig', true)),
 			'station_sig_info' => xss_clean($this->input->post('sig_info', true)),
 			'station_callsign' => xss_clean($this->input->post('station_callsign', true)),
@@ -520,8 +524,16 @@ class Stations extends CI_Model {
 		$_jsonresult = array();
 		list($station_lat, $station_lng) = array(0,0);
 		$station_active = $this->profile($this->find_active())->row();
-		if (!empty($station_active)) { list($station_lat, $station_lng) = $this->qra->qra2latlong($station_active->station_gridsquare); }
-		if (($station_lat!=0)&&($station_lng!=0)) { $_jsonresult = array('lat'=>$station_lat,'lng'=>$station_lng,'html'=>$station_active->station_gridsquare,'label'=>$station_active->station_profile_name,'icon'=>'stationIcon'); }
+
+		$CI = &get_instance();
+		$CI->load->library('DxccFlag');
+		$flag = "";
+		if (!empty($station_active)) { 
+			$flag = strtolower($CI->dxccflag->getISO($station_active->station_dxcc));
+			$flag = '<span class="fi fi-' . $flag .'"></span> ';
+			list($station_lat, $station_lng) = $this->qra->qra2latlong($station_active->station_gridsquare); 
+		}
+		if (($station_lat!=0)&&($station_lng!=0)) { $_jsonresult = array('lat'=>$station_lat,'lng'=>$station_lng,'html'=>$station_active->station_gridsquare,'label'=>$station_active->station_profile_name,'icon'=>'stationIcon','flag'=>$flag); }
 		return (count($_jsonresult)>0)?(array('station'=>$_jsonresult)):array();
 	}
 }

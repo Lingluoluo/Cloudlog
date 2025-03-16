@@ -11,6 +11,7 @@ $lang['account_column5_text'] = 'Columna 5 (solo en libro de guardia)';
 
 $lang['account_create_user_account'] = 'Crear Cuenta de Usuario';
 $lang['account_edit_account'] = 'Editar Cuenta';
+$lang['account_remember_me'] = 'Remember me';
 
 $lang['account_account_information'] = 'Información de la Cuenta';
 $lang['account_user'] = "Usuario";
@@ -127,3 +128,8 @@ $lang['account_qso_logging_options'] = "Opciones del Registro de QSO";
 $lang['account_third_party_services'] = "Servicios de Terceros";
 $lang['account_default_values'] = "Valores por Defecto";
 $lang['account_miscellaneous'] = "Otras Opciones";
+
+$lang['account_hamsat'] = "Hams.at";
+$lang['account_hamsat_private_feed_key'] = "Private Feed Key";
+$lang['account_hamsat_hint'] = "See your profile at <a href='https://hams.at/users/settings' target='_blank'>https://hams.at/users/settings</a>.";
+$lang['account_hamsat_workable_only'] = "Show Workable Passes Only";

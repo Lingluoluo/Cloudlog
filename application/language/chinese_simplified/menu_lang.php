@@ -17,6 +17,7 @@ $lang['menu_post_contest_logging'] = '比赛日志（手动）';
 $lang['menu_bandmap'] = '波段地图';
 $lang['menu_view_qsl'] = '浏览QSL卡片';
 $lang['menu_view_eqsl'] = '浏览eQSL卡片';
+$lang['menu_view_sstv'] = 'View SSTV Images';
 
 $lang['menu_notes'] = '笔记';
 
@@ -94,3 +95,4 @@ $lang['menu_logout'] = '注销';
 $lang['menu_ffma'] = "弗雷德·菲什纪念奖";
 $lang['menu_ja_gridmaster'] = 'JA Gridmaster';
 $lang['menu_maintenance']='维护';
+$lang['menu_uk_gridmaster'] = 'UK Gridmaster';

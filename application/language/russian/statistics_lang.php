@@ -25,14 +25,21 @@ $lang['statistics_number_of_qso_worked'] = "# QSO проведено";
 *
 */
 
+$lang['statistics_distances_bands_all'] = "все";
+$lang['statistics_distances_modes_all'] = "все";
 $lang['statistics_distances_worked'] = "Сработанные дистанции";
 $lang['statistics_distances_part1_contacts_were_plotted_furthest'] = "контакты отображены.<br /> Наиболее дальний контакт с";
 $lang['statistics_distances_part2_contacts_were_plotted_furthest'] = "в квадрате";
 $lang['statistics_distances_part3_contacts_were_plotted_furthest'] = "на дистанции";
+$lang['statistics_distances_part4_contacts_were_plotted_furthest'] = "Среднее расстояние составляет";
 $lang['statistics_distances_number_of_qsos'] = "Количество QSO";
 $lang['statistics_distances_callsigns_worked'] = "Сработанные позывные(ной) (максимально 5 показано)";
 $lang['statistics_distances_qsos_with'] = "QSOs с";
-$lang['statistics_distances_and_band'] = "и диапазоне";
+$lang['statistics_distances_and_band'] = ", диапазоне : ";
+$lang['statistics_distances_and_mode'] = ", Вид модуляции : ";
+$lang['statistics_distances_and_power'] = ", Мощность передачи : ";
+$lang['statistics_distances_and_propagation'] = ", Тип прохождения : ";
+$lang['statistics_distances_no_qsos_to_plot'] = "No QSOs found to plot.";
 
 /*
 *
@@ -48,13 +55,20 @@ $lang['statistics_timeline'] = "Лента времени";
 *
 */
 
-$lang['statistics_days_with_qso'] = "Number of days with QSOs each year";
-$lang['statistics_days_with_qso_short'] = "Days with QSOs";
-$lang['statistics_dwq_longest_streak_in_log'] = "Longest streak with QSOs in the log";
-$lang['statistics_dwq_longest_streak_in_log_hint'] = "A maximum of the 10 longest streaks are shown!";
-$lang['statistics_dwq_streak_continuous_days'] = "Streak (continuous days with QSOs)";
-$lang['statistics_dwq_current_streak_in_log'] = "Current streak with QSOs in the log";
-$lang['statistics_dwq_current_streak_continuous_days'] = "Current streak (continuous days with QSOs)";
-$lang['statistics_dwq_make_qso_to_extend_streak'] = "If you make a QSO today, you can continue to extend your streak... or else your current streak will be broken!";
-$lang['statistics_dwq_no_current_streak'] = "No current streak found!";
-
+$lang['statistics_tab_yearly'] = "Yearly";
+$lang['statistics_tab_streaks'] = "Streaks";
+$lang['statistics_tab_weekdays'] = "Days of the week";
+$lang['statistics_tab_daily'] = "Daily";
+$lang['statistics_days_yearly'] = "Number of days with QSOs each year";
+$lang['statistics_days_with_qso'] = "Дней с QSO";
+$lang['statistics_qsos_each_day'] = "Number of QSOs each day";
+$lang['statistics_weekdays_with_qso'] = "QSOs breakdown by day of the week";
+$lang['statistics_number_of_qsos_this_day'] = "Number of QSOs this day";
+$lang['statistics_number_of_qsos_this_weekday'] = "Number of QSOs for this day of the week";
+$lang['statistics_dwq_longest_streak_in_log'] = "Самый длинный интервал дней с QSO в журнале";
+$lang['statistics_dwq_longest_streak_in_log_hint'] = "Отображаются 10 самых длинных интервалов!";
+$lang['statistics_dwq_streak_continuous_days'] = "Интервал (непрерывных дней с QSO)";
+$lang['statistics_dwq_current_streak_in_log'] = "Текущий интервал дней с QSO в журнале";
+$lang['statistics_dwq_current_streak_continuous_days'] = "Текущий интервал (непрерывных дней с QSO)";
+$lang['statistics_dwq_make_qso_to_extend_streak'] = "Если вы проведёте QSO сегодня, вы можете удлинить текущий интерывл дней с QSO... иначе текущий интервал будет прерван!";
+$lang['statistics_dwq_no_current_streak'] = "Текущий интервал не найден!";

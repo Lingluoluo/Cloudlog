@@ -127,6 +127,29 @@ class API extends CI_Controller {
 		}
 	}
 
+	function check_auth($key) {
+		$this->load->model('api_model');
+			header("Content-type: text/xml");
+		if($this->api_model->access($key) == "No Key Found" || $this->api_model->access($key) == "Key Disabled") {
+			// set the content type as json
+			header("Content-type: application/json");
+
+			// set the http response code to 401
+			http_response_code(401);
+
+			// return the json with the status as failed
+			echo json_encode(['status' => 'failed', 'reason' => "missing or invalid api key"]);
+		} else {
+			// set the content type as json
+			header("Content-type: application/json");
+
+			// set the http response code to 200
+			http_response_code(200);
+			// return the json
+			echo json_encode(['status' => 'valid', 'rights' => $this->api_model->access($key)]);
+		}
+	}
+
 	function station_info($key) {
 		$this->load->model('api_model');
 		$this->load->model('stations');
@@ -170,8 +193,13 @@ class API extends CI_Controller {
 		// Decode JSON and store
 		$obj = json_decode(file_get_contents("php://input"), true);
 		if ($obj === NULL) {
-		    echo json_encode(['status' => 'failed', 'reason' => "wrong JSON"]);
-		    die();
+			// Decoding not valid try simple www-x-form-urlencoded
+		    $objTmp = file_get_contents("php://input");
+		    parse_str($objTmp, $obj);
+		    if ($obj === NULL) {
+		        echo json_encode(['status' => 'failed', 'reason' => "wrong JSON"]);
+		        die();
+		    }
 		}
 
 		if(!isset($obj['key']) || $this->api_model->authorize($obj['key']) == 0) {

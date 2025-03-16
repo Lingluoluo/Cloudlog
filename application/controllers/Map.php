@@ -10,10 +10,10 @@ class Map extends CI_Controller {
     function custom()
 	{
 		$this->load->model('bands');
-        $this->load->model('modes');
+        $this->load->model('gridmap_model');
 
-        $data['worked_bands'] = $this->bands->get_worked_bands(); // Used in the view for band select
-		$data['modes'] = $this->modes->active(); 					// Used in the view for mode select
+        $data['worked_bands'] = $this->bands->get_worked_bands();  // Used in the view for band select
+		$data['modes'] = $this->gridmap_model->get_worked_modes(); // Used in the view for mode select
 
         if ($this->input->post('band') != NULL) {   			// Band is not set when page first loads.
             if ($this->input->post('band') == 'All') {          // Did the user specify a band? If not, use all bands
@@ -80,13 +80,30 @@ class Map extends CI_Controller {
 			$offset = (intval($this->input->post('offset'))>0)?xss_clean($this->input->post('offset')):null;
 			$qsos = $this->logbook_model->get_qsos($nb_qso, $offset);
 		}
-		// [PLOT] ADD plot //
-		$plot_array = $this->logbook_model->get_plot_array_for_map($qsos->result());
-		// [MAP Custom] ADD Station //
-		$station_array = $this->Stations->get_station_array_for_map();
 		
-		header('Content-Type: application/json; charset=utf-8');
-		echo json_encode(array_merge($plot_array, $station_array));
+		if(empty($qsos)) {
+			// Handle the case where $qsos is empty
+
+			// return json with error "No QSOs found"
+			header('Content-Type: application/json; charset=utf-8');
+			echo json_encode(array('error' => 'No QSOs found'));
+		} else {
+			// Handle the case where $qsos is not empty
+			// [PLOT] ADD plot //
+			$plot_array = $this->logbook_model->get_plot_array_for_map($qsos->result());
+			// [MAP Custom] ADD Station //
+			$station_array = $this->Stations->get_station_array_for_map();
+			
+			header('Content-Type: application/json; charset=utf-8');
+			echo json_encode(array_merge($plot_array, $station_array));
+		}
+
 	}
 
+	// Function to fetch the date of the oldest QSO in the log
+	public function get_oldest_qso_date() {
+		$this->load->model('logbook_model');
+		$oldestQSOdate = $this->logbook_model->get_oldest_qso_date();
+		echo $oldestQSOdate;
+	}
 }

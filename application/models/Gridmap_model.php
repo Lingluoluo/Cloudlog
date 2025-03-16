@@ -3,6 +3,7 @@
 class Gridmap_model extends CI_Model {
 
     function get_band_confirmed($band, $mode, $qsl, $lotw, $eqsl, $qrz, $sat, $logbooks_locations_array = NULL) {
+
         if ($logbooks_locations_array == NULL) {
            $CI =& get_instance();
            $CI->load->model('logbooks_model');
@@ -177,7 +178,10 @@ class Gridmap_model extends CI_Model {
 		    $sql .= " or col_qrzcom_qso_download_status = 'Y'";
 	    }
 	    if ($sql != '') {
-		    $sql='and (1=0 '.$sql.')';
+		    $sql=' and (1=0 '.$sql.')';
+	    }
+	    if ($sql == '') {
+		    $sql=' and 1=0';
 	    }
 	    return $sql;
     }

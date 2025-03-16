@@ -8,6 +8,7 @@ $lang['account_column2_text'] = 'Wähle Spalte 2';
 $lang['account_column3_text'] = 'Wähle Spalte 3';
 $lang['account_column4_text'] = 'Wähle Spalte 4';
 $lang['account_column5_text'] = 'Wähle Spalte 5 (nur für Logbuch)';
+$lang['account_remember_me'] = 'Remember me';
 
 $lang['account_create_user_account'] = 'Benutzerkonto anlegen';
 $lang['account_edit_account'] = 'Benutzerkonto editieren';
@@ -127,3 +128,8 @@ $lang['account_qso_logging_options'] = "QSO-Logging Optionen";
 $lang['account_third_party_services'] = "Externe Dienste";
 $lang['account_default_values'] = "Standardwerte / Favoriten";
 $lang['account_miscellaneous'] = "Verschiedenes";
+
+$lang['account_hamsat'] = "Hams.at";
+$lang['account_hamsat_private_feed_key'] = "Private Feed Key";
+$lang['account_hamsat_hint'] = "Siehe dein Profil unter <a href='https://hams.at/users/settings' target='_blank'>https://hams.at/users/settings</a>.";
+$lang['account_hamsat_workable_only'] = "Zeige nur Überflüge an, die gearbeitet werden können";

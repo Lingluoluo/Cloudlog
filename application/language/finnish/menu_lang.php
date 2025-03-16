@@ -17,6 +17,7 @@ $lang['menu_post_contest_logging'] = 'Post Contest Logging';
 $lang['menu_bandmap'] = 'Bandikartta';
 $lang['menu_view_qsl'] = 'Näytä QSL';
 $lang['menu_view_eqsl'] = 'Näytä eQSL';
+$lang['menu_view_sstv'] = 'View SSTV Images';
 
 $lang['menu_notes'] = 'Muistio';
 
@@ -94,3 +95,4 @@ $lang['menu_logout'] = 'Kirjaudu ulos';
 $lang['menu_ffma'] = "Fred Fish Memorial Award";
 $lang['menu_ja_gridmaster'] = 'JA Gridmaster';
 $lang['menu_maintenance']='Maintenance';
+$lang['menu_uk_gridmaster'] = 'UK Gridmaster';

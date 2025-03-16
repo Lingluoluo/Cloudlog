@@ -2,7 +2,7 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-$lang['error_no_active_station_profile'] = 'Внимание: вам нужно назначить активный профиль месторасположения станции.';
+$lang['error_no_active_station_profile'] = 'Внимание: вам нужно назначить активное местоположение станции.';
 
 $lang['notice_turn_the_radio_on'] = 'За сегодня ни одного QSO, время вернуться к радио!';
 
@@ -23,9 +23,10 @@ $lang['general_word_export'] = "Экспорт";
 $lang['general_word_import'] = "Импорт";
 $lang['general_word_count'] = "Счётчик";
 $lang['general_word_filtering_on'] = "Отфильтровано по";
-$lang['general_word_not_display'] = "Not display";
-$lang['general_word_icon'] = "Icon";
-$lang['general_word_never'] = "Never";
+$lang['general_word_not_display'] = "Не отображать";
+$lang['general_word_icon'] = "Иконка";
+$lang['general_word_never'] = "Никогда";
+$lang['general_word_undefined'] = "Undefined";
 
 $lang['general_word_date'] = 'Дата';
 $lang['general_word_startdate'] = "Дата начала";
@@ -36,6 +37,7 @@ $lang['general_word_time_off'] = 'Время окончания';
 $lang['general_word_datetime'] = 'Дата/Время';
 $lang['general_word_none'] = '-';
 $lang['general_word_name'] = 'Имя';
+$lang['general_word_flag'] = 'Флаг';
 $lang['general_word_location'] = 'QTH';
 $lang['general_word_comment'] = 'Комментарий';
 $lang['general_word_general'] = 'Общее';
@@ -43,13 +45,13 @@ $lang['general_word_satellite'] = 'Спутник';
 $lang['general_word_satellite_short'] = 'Спутн.';
 $lang['general_word_notes'] = 'Заметки';
 $lang['general_word_country'] = 'Страна';
-$lang['general_word_city'] = 'City';
+$lang['general_word_city'] = 'Город';
 
 $lang['general_word_total'] = 'Всего';
 $lang['general_word_year'] = 'Год';
 $lang['general_word_month'] = 'Месяц';
-$lang['general_word_day'] = "Day";
-$lang['general_word_days'] = "Days";
+$lang['general_word_day'] = "День";
+$lang['general_word_days'] = "Дней";
 
 $lang['general_word_colors'] = "Цвета";
 $lang['general_word_light'] = "Свет/лазер";
@@ -57,7 +59,7 @@ $lang['general_word_worked'] = 'Сработано';
 $lang['general_word_worked_not_confirmed'] = "Сработано, не подтверждено";
 $lang['general_word_not_worked'] = "Не сработано";
 $lang['general_word_confirmed'] = 'Подтверждено';
-$lang['general_word_confirmation'] = "Пожтверждение";
+$lang['general_word_confirmation'] = "Подтверждение";
 $lang['general_word_needed'] = 'Необходимо';
 
 $lang['general_word_all'] = 'Все';
@@ -82,11 +84,15 @@ $lang['general_word_qslcard_manager'] = 'Менеджер';
 $lang['general_word_qslcard_via'] = 'через';
 $lang['general_word_eqslcard'] = 'eQSL Card';
 $lang['general_word_eqslcards'] = 'eQSL';
+$lang['general_word_sstv_management'] = 'SSTV менеджмент';
+$lang['general_word_sstvimages'] = 'Изображения SSTV';
+$lang['general_sstv_upload'] = 'Загруженные изображения SSTV';
+$lang['general_sstv_upload_button'] = 'Загрзка изображений SSTV';
 $lang['general_word_lotw'] = 'Logbook of the World';
 $lang['general_word_lotw_short'] = 'LoTW';
 
 $lang['general_word_qso_data'] = 'Данные QSO';
-$lang['general_word_details'] = 'Подробно';
+$lang['general_word_details'] = 'детально';
 
 $lang['general_edit_qso'] = 'Редактировать QSO';
 $lang['general_mark_qsl_rx_bureau'] = 'Отметить QSL полученной (через бюро)';
@@ -97,10 +103,10 @@ $lang['general_mark_qsl_tx_direct'] = 'Отметить QSL отправлено
 $lang['general_mark_qsl_requested'] = 'Отметить запрос QSL-карточки';
 $lang['general_mark_qsl_requested_bureau'] = 'Отметить запрос QSL-карточки (через бюро)';
 $lang['general_mark_qsl_requested_direct'] = 'Отметить запрос QSL-карточки (напрямую)';
-$lang['general_mark_qsl_not_required'] = 'Отметить QSL-карточка не требуется';
+$lang['general_mark_qsl_not_required'] = 'Отметить, что QSL-карточка не требуется';
 
 $lang['general_delete_qso'] = 'Удалить QSO';
-$lang['general_more_qso'] = 'Больше QSO';
+$lang['general_more_qso'] = 'Ещё QSO';
 
 $lang['general_lookup_qrz'] = 'Поиск в QRZ.com';
 $lang['general_lookup_hamqth'] = 'Поиск в HamQTH';
@@ -111,12 +117,12 @@ $lang['general_total_distance'] = 'Суммарная дистанция';
 $lang['gen_max_file_upload_size'] = 'Максимальный размер загружаемого файла ';
 
 // Cloudlog Terms
-$lang['cloudlog_station_profile'] = 'Месторасположение станции';
+$lang['cloudlog_station_profile'] = 'Местоположение станции';
 
 $lang['gen_hamradio_cq'] = "CQ";
 // ham radio terms
 $lang['gen_hamradio_qso'] = 'QSO';
-$lang['gen_hamradio_station'] = 'Станция';
+$lang['gen_hamradio_station'] = 'Местоположение';
 
 $lang['gen_hamradio_call'] = 'Позывной';
 $lang['gen_hamradio_prefix'] = "Префикс";
@@ -125,6 +131,8 @@ $lang['gen_hamradio_callsign'] = 'Позывной';
 $lang['gen_hamradio_de'] = 'от';
 $lang['gen_hamradio_dx'] = 'DX';
 $lang['gen_hamradio_mode'] = 'Вид модуляции';
+$lang['gen_hamradio_ant_az'] = 'Antenna Azimuth';
+$lang['gen_hamradio_ant_el'] = 'Antenna Elevation';
 $lang['gen_hamradio_rst_sent'] = 'Отправлено';
 $lang['gen_hamradio_rst_rcvd'] = 'Получено';
 $lang['gen_hamradio_bandgroup'] = "Bandgroup";
@@ -146,6 +154,24 @@ $lang['gen_hamradio_qslmsg'] = 'сообщение QSL ';
 $lang['gen_hamradio_locator'] = 'Локатор';
 $lang['gen_hamradio_transmit_power'] = 'Мощность передачи (Вт)';
 $lang['gen_hamradio_propagation_mode'] = 'Тип прохождения';
+$lang['gen_hamradio_propagation_AS'] = "Aircraft Scatter";
+$lang['gen_hamradio_propagation_AUR'] = "Aurora";
+$lang['gen_hamradio_propagation_AUE'] = "Aurora-E";
+$lang['gen_hamradio_propagation_BS'] = "Back scatter";
+$lang['gen_hamradio_propagation_ECH'] = "EchoLink";
+$lang['gen_hamradio_propagation_EME'] = "Earth-Moon-Earth";
+$lang['gen_hamradio_propagation_ES'] = "Sporadic E";
+$lang['gen_hamradio_propagation_FAI'] = "Field Aligned Irregularities";
+$lang['gen_hamradio_propagation_F2'] = "F2 Reflection";
+$lang['gen_hamradio_propagation_INTERNET'] = "Internet-assisted";
+$lang['gen_hamradio_propagation_ION'] = "Ionoscatter";
+$lang['gen_hamradio_propagation_IRL'] = "IRLP";
+$lang['gen_hamradio_propagation_MS'] = "Meteor scatter";
+$lang['gen_hamradio_propagation_RPT'] = "Terrestrial or atmospheric repeater or transponder";
+$lang['gen_hamradio_propagation_RS'] = "Rain scatter";
+$lang['gen_hamradio_propagation_SAT'] = "Satellite";
+$lang['gen_hamradio_propagation_TEP'] = "Trans-equatorial";
+$lang['gen_hamradio_propagation_TR'] = "Tropospheric ducting";
 
 $lang['gen_hamradio_satellite_name'] = 'Название спутника';
 $lang['gen_hamradio_satellite_mode'] = 'Режим работы спутника';
@@ -172,7 +198,7 @@ $lang['gen_hamradio_sota'] = 'SOTA';
 $lang['gen_hamradio_wwff'] = 'WWFF';
 $lang['gen_hamradio_pota'] = 'POTA';
 $lang['gen_hamradio_get_gridsquare'] = 'Получить квадрат';
-$lang['gen_hamradio_gridsquare_show'] = "Show Locator";
+$lang['gen_hamradio_gridsquare_show'] = "Показать квадрат";
 $lang['gen_hamradio_latitude'] = "Широта";
 $lang['gen_hamradio_longitude'] = "Долгота";
 $lang['gen_hamradio_bearing'] = "Направление";
@@ -193,7 +219,7 @@ $lang['gen_find_zone_part3'] = "чтобы узнать её!";
 $lang['dashboard_you_have_had'] = '';
 $lang['dashboard_qsos_today'] = 'QSOs сегодня!';
 $lang['dashboard_qso_breakdown'] = 'Статистика QSO';
-$lang['gen_to_date'] = 'To date';
+$lang['gen_to_date'] = 'До даты';
 $lang['dashboard_countries_breakdown'] = 'Статистика по странам';
 
 $lang['gen_from_date'] = 'Начиная с даты';
@@ -222,4 +248,6 @@ $lang['dashboard_logbooks_warning'] = 'У вас нет аппаратного �
 
 $lang['hams_at_no_activations_found'] = 'не найдены предстоящие активации. Проверьте позже.';
 
-$lang['datatables_language'] = "en-GB";
+$lang['datatables_language'] = "ru-RU";
+
+$lang['set_log_to_full_dates'] = "Set log to full dates";

@@ -11,9 +11,16 @@
 /images/eqsl_card_images/*.jpg
 /updates/clublog_scp.txt
 /assets/qslcard/*
+/assets/sstvimages/*
 /assets/js/sections/custom.js
+/cypress/screenshots
+/node_modules/
 .idea/*
 .DS_Store
 sync.sh
 *.p12
 *.swp
+.env
+/node_modules
+/.vs
+.vscode/sftp.json
